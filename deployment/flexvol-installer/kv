@@ -38,6 +38,9 @@ ismounted() {
 mount() {
 	MNTPATH="$1"
 
+	echo "printing what I got from kubelet"
+	echo "$2" | "$JQ"
+
 	CLIENTID="$(echo "$2"|"$JQ" -r '.["kubernetes.io/secret/clientid"] // empty' | base64 -d)"
 	CLIENTSECRET="$(echo "$2"|"$JQ" -r '.["kubernetes.io/secret/clientsecret"] // empty' | tr -d '\n' | tr -d ' ' | base64 -d)"
 

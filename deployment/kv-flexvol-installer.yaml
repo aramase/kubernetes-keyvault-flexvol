@@ -24,7 +24,7 @@ spec:
       tolerations:
       containers:
       - name: flexvol-driver-installer
-        image: "mcr.microsoft.com/k8s/flexvolume/keyvault-flexvolume:v0.0.15"
+        image: aramase/keyvault-flexvolume:v0.0.16-dirty00
         imagePullPolicy: Always
         resources:
           requests:
@@ -37,9 +37,9 @@ spec:
           # if you have used flex before on your cluster, use same directory
           # set TARGET_DIR env var and mount the same directory of the container
         - name: TARGET_DIR
-          value: "/etc/kubernetes/volumeplugins"
+          value: "/usr/libexec/kubernetes/kubelet-plugins/volume/exec"
         volumeMounts:
-        - mountPath: "/etc/kubernetes/volumeplugins"
+        - mountPath: "/usr/libexec/kubernetes/kubelet-plugins/volume/exec"
           name: volplugins
       volumes:
       - hostPath:
@@ -47,7 +47,7 @@ spec:
           # default kubernetes: "/usr/libexec/kubernetes/kubelet-plugins/volume/exec"
           # google cloud kubernetes: "/home/kubernetes/flexvolume"
           # below is Azure default
-          path: "/etc/kubernetes/volumeplugins" 
+          path: "/usr/libexec/kubernetes/kubelet-plugins/volume/exec" 
         name: volplugins
       nodeSelector:
         beta.kubernetes.io/os: linux
